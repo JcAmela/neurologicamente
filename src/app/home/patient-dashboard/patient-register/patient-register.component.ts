@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PatientsService } from './../../../../../services/patients.service';
 import { DateService } from '../../../../../services/data.service';
 import Patient from './../../../../../interfaces/interfaces';
@@ -34,25 +34,19 @@ export class PatientRegisterComponent implements OnInit {
         telefono: ['' ]  // Solo permite 10 dígitos
       }),
       diagnostico: this.fb.group({
-        nombreDiagnostico: [''],  // Ahora es opcional
-        dominiosComprometidos: this.fb.array([])  // Ya era opcional, no hay cambios aquí
-      }),
-
+        nombreDiagnostico: [''],
+        dominiosComprometidos: this.fb.array([]),
+        informe: ['']  
+      })
     });
-
   }
 
-  get dominiosComprometidos(): FormArray {
-    return this.registerForm.get('diagnostico.dominiosComprometidos') as FormArray;
-  }
-
-  addDominioComprometido() {
-    this.dominiosComprometidos.push(this.fb.control(''));
-  }
-
-  removeDominioComprometido(index: number) {
-    this.dominiosComprometidos.removeAt(index);
-  }
+  get datosPersonalesFormGroup(): FormGroup {
+    return this.registerForm.get('datosPersonales')! as FormGroup;
+}
+get diagnosticoGroup(): FormGroup {
+  return this.registerForm.get('diagnostico')! as FormGroup;
+}
 
   get tests(): FormArray {
     return this.registerForm.get('test') as FormArray;
@@ -60,41 +54,40 @@ export class PatientRegisterComponent implements OnInit {
 
   logInvalidControls(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(key => {
-        const control = formGroup.controls[key];
-        if (control instanceof FormGroup) {
-            // Recursivamente verificará sub-grupos
-            this.logInvalidControls(control);
-        } else if (!control.valid) {
-            console.log(`Control inválido: ${key} - Error:`, control.errors);
-        }
+      const control = formGroup.controls[key];
+      if (control instanceof FormGroup) {
+        // Recursively check sub-groups
+        this.logInvalidControls(control);
+      } else if (!control.valid) {
+        console.log(`Invalid control: ${key} - Error:`, control.errors);
+      }
     });
-}
+  }
 
-onSubmit() {
-    console.log('llega a onsubmit');
+  onSubmit() {
+    console.log('Arrives at onSubmit');
 
     if (this.registerForm.valid) {
-        console.log('Formulario validado');
+      console.log('Form validated');
 
-        const newPatient: Patient = this.registerForm.value;
-        if (newPatient.datosPersonales) {
-            console.log('si datos personales existe guarda la fecha');
-            newPatient.datosPersonales.fechaActual = this.todayDate;
+      const newPatient: Patient = this.registerForm.value;
+      if (newPatient.datosPersonales) {
+        console.log('If datos personales exists, save the date');
+        newPatient.datosPersonales.fechaActual = this.todayDate;
+      }
+
+      this.patientsService.addPatient(newPatient).subscribe(
+        () => {
+          this.submitMessage = "Patient added successfully";
+          this.registerForm.reset();
+        },
+        error => {
+          this.submitMessage = "Error adding patient: " + error.message;
         }
-
-        this.patientsService.addPatient(newPatient).subscribe(
-            () => {
-                this.submitMessage = "Paciente agregado con éxito";
-                this.registerForm.reset();
-            },
-            error => {
-                this.submitMessage = "Error al agregar paciente: " + error.message;
-            }
-        );
+      );
     } else {
-        console.log('Formulario no es válido');
-        this.logInvalidControls(this.registerForm);
+      console.log('Form is not valid');
+      this.logInvalidControls(this.registerForm);
     }
-}
-
+  }
 }

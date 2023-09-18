@@ -1,0 +1,37 @@
+<!-- Sección de Diagnóstico -->
+<div class="container-fluid">
+    <div class="card mt-4 diagnostico-card" [formGroup]="diagnosticoGroup">
+        <div class="card-header diagnostico-card-header">Diagnóstico</div>
+        <div class="card-body diagnostico-card-body">
+            <label>Añade un diagnóstico previo:</label>
+            <input formControlName="nombreDiagnostico" placeholder="Nombre Diagnóstico"
+                class="diagnostico-form-control" />
+            <label>¿Este paciente ya tenía dominios comprometidos?</label>
+            <div formArrayName="dominiosComprometidos">
+                <div *ngFor="let dominio of dominiosComprometidos.controls; let i = index" class="dominio-item">
+                    <input [formControlName]="i" placeholder="Ej. Motor, Cognitivo, Emocional..."
+                        class="diagnostico-form-control" />
+                    <button type="button" class="btn-icon" (click)="removeDominioComprometido(i)"
+                        title="Eliminar dominio">
+                        ✕
+                    </button>
+                </div>
+                <button type="button" (click)="addDominioComprometido()" title="Añadir nuevo dominio"
+                    class="btn-full-width">
+                    Añadir dominio comprometido
+                </button>
+            </div>
+
+            <button type="button" class="btn-full-width">
+                Añadir mi diagnóstico final
+            </button>
+
+            <button type="button" class="btn-full-width" (click)="toggleInformeField()">
+                Escribir mi informe sobre este paciente
+            </button>
+            <div *ngIf="showInformeField">
+                <textarea formControlName="informe" placeholder="Escriba su informe aquí..."></textarea>
+            </div>
+        </div>
+    </div>
+</div>
