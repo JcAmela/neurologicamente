@@ -1,0 +1,83 @@
+/* Colores y fuentes */
+:root {
+  --primary-color: #007bff;
+  --accent-color: #FFC107;
+  --text-color: #333;
+  --light-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  --font: 'Roboto', sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--text-color);
+}
+
+/* Sección hero */
+.hero-section {
+  height: 80vh;
+  background: linear-gradient(45deg, #6DD5ED, #2193B0);
+  color: white;
+  padding: 50px 0;
+}
+
+.text-container {
+  padding: 20px;
+}
+
+.brand-name {
+  font-weight: bold;
+}
+
+.lead {
+  font-size: 1.5rem;
+  margin-top: 20px;
+  max-width: 450px;
+}
+
+.hero-img {
+  width: 100%;
+  max-width: 450px;
+  display: block;
+  margin: auto;
+}
+
+.btn-accent {
+  background: var(--accent-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  color: white;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.btn-accent:hover {
+  background: darken(var(--accent-color), 10%);
+}
+
+/* Sección de características */
+.section-title {
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+
+.feature-section {
+  margin-top: 50px;
+}
+
+.feature-box {
+  padding: 20px;
+  box-shadow: var(--light-shadow);
+  border-radius: 10px;
+  background: white;
+  transition: transform 0.2s;
+}
+
+.feature-box:hover {
+  transform: translateY(-10px);
+}
+
+.feature-box i {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}

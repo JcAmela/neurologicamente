@@ -1,0 +1,20 @@
+.news-card {
+    height: 300px;
+    overflow: hidden;
+}
+
+.news-image {
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+}
+
+.card-title, .card-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;  /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+}
+
+/* Mantén el resto de tus estilos intactos */

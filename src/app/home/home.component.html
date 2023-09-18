@@ -1,0 +1,52 @@
+
+<!-- Hero Section -->
+<section class="hero-section py-5 bg-light">
+  <div class="container h-100">
+    <div class="row align-items-center h-100">
+      <div class="col-md-8">
+        <h1 class="display-4">Bienvenido a NeuroPsicoLogicTest</h1>
+        <p class="lead">Tu plataforma confiable para pruebas y evaluaciones psicológicas.</p>
+        <a href="#" class="btn btn-primary mt-3">Comienza ahora</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Carousel Noticias -->
+<ngb-carousel [interval]="10000" [showNavigationArrows]="false" [showNavigationIndicators]="true">
+  <ng-template ngbSlide *ngFor="let news of noticias">
+    <app-newscard [noticia]="news"></app-newscard>
+  </ng-template>
+</ngb-carousel>
+
+
+
+<!-- Publicidad de Servicios -->
+<section class="services-ad py-5">
+  <div class="container">
+    <h2 class="mb-4">Nuestros Servicios</h2>
+    <div class="row">
+      <div class="col-lg-4 mb-4">
+        <div class="card bg-light text-center p-5 shadow-sm hover-shadow">
+          <i class="fas fa-brain fa-3x mb-3 text-primary"></i>
+          <h5 class="card-title">Nombre del Servicio 1</h5>
+          <p class="card-text">Descripción del servicio.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 mb-4">
+        <div class="card bg-light text-center p-5 shadow-sm hover-shadow">
+          <i class="fas fa-brain fa-3x mb-3 text-primary"></i>
+          <h5 class="card-title">Nombre del Servicio 2</h5>
+          <p class="card-text">Descripción del servicio.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 mb-4">
+        <div class="card bg-light text-center p-5 shadow-sm hover-shadow">
+          <i class="fas fa-brain fa-3x mb-3 text-primary"></i>
+          <h5 class="card-title">Nombre del Servicio 3</h5>
+          <p class="card-text">Descripción del servicio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

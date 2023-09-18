@@ -1,0 +1,31 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="login-card card shadow-lg p-4 w-100" style="max-width: 500px; border-radius: 20px;">
+    <h2 class="text-center font-weight-bold mb-5">Iniciar Sesión</h2>
+
+    <form (submit)="onLogin()" class="mb-3">
+      <div class="form-group">
+        <label for="email" class="font-weight-bold">Correo Electrónico</label>
+        <input [(ngModel)]="email" type="email" class="form-control form-input" id="email" placeholder="ejemplo@correo.com" name="email" required>
+      </div>
+
+      <div class="form-group mt-4">
+        <label for="password" class="font-weight-bold">Contraseña</label>
+        <input [(ngModel)]="password" type="password" class="form-control form-input" id="password" placeholder="Contraseña" name="password" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block btn-lg mt-5">Iniciar Sesión</button>
+    </form>
+
+    <button (click)="onLoginWithGoogle()" class="btn btn-outline-dark btn-block btn-lg">
+      <img src="./../../../assets/googleLogo.avif" alt="Google Logo" height="28"> Iniciar con Google
+    </button>
+
+    <div class="text-center mt-4">
+      <small>No tienes una cuenta? <a routerLink="/register" class="text-primary font-weight-bold">Regístrate</a></small>
+    </div>
+
+    <div *ngIf="errorMessage" class="mt-4 text-danger text-center font-weight-bold">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div formGroupName="datosPersonales">
+    <input formControlName="nombre" placeholder="Nombre">
+    <input formControlName="apellidos" placeholder="Apellidos">
+    <input type="date" formControlName="fechaNacimiento" placeholder="Fecha de Nacimiento">
+    <select formControlName="sexoBiologico">
+      <option value="Hombre">Hombre</option>
+      <option value="Mujer">Mujer</option>
+    </select>
+    <input formControlName="direccion" placeholder="Dirección">
+    <input formControlName="telefono" placeholder="Teléfono">
+  </div>
+
+  <div formGroupName="diagnostico">
+    <input formControlName="nombreDiagnostico" placeholder="Nombre Diagnóstico">
+    <div formArrayName="dominiosComprometidos">
+      <div *ngFor="let dominio of dominiosComprometidos.controls; let i=index">
+        <input [formControlName]="i" placeholder="Dominio Comprometido">
+        <button type="button" (click)="removeDominioComprometido(i)">Remove</button>
+      </div>
+    </div>
+    <button type="button" (click)="addDominioComprometido()">Add Dominio Comprometido</button>
+  </div>
+  <button type="submit">Registrar</button>
+</form>
+
+<!-- Mensaje de feedback -->
+<p>{{ submitMessage }}</p>
