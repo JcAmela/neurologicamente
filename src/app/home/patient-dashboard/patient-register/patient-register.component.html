@@ -1,7 +1,6 @@
 <div class="container-fluid">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <app-datos-personales [datosPersonalesGroup]="datosPersonalesFormGroup"></app-datos-personales>
-      <app-diagnostico [diagnosticoGroup]="diagnosticoGroup"></app-diagnostico>
       <button type="submit" class="mt-4">Registrar</button>
   </form>
 </div>

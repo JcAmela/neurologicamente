@@ -1,1 +1,75 @@
-<p>history works!</p>
+<div class="container mt-4">
+    <h2>Anamnesis</h2>
+  
+    <!-- Motivo de consulta -->
+    <div class="section mt-3">
+      <h4>Motivo de consulta</h4>
+      <label for="motivoConsulta">Motivo de consulta:</label>
+      <input id="motivoConsulta" class="form-control" type="text" [(ngModel)]="motivoConsulta">
+    </div>
+  
+    <!-- Historia clínica/biopsicosocial -->
+    <div class="section mt-3">
+      <h4>Antecedentes</h4>
+      <!-- Aquí no es necesario un label, ya que no es un campo de entrada directo -->
+      <input class="form-control" type="text" [(ngModel)]="historiaClinicaBiopsicosocial">
+      
+      <!-- Antecedentes médicos -->
+      <div class="form-row mt-2">
+        <div class="col">
+          <label for="antecedenteMedico">Antecedentes médicos:</label>
+          <input id="antecedenteMedico" class="form-control" type="text" [(ngModel)]="historiaClinicaBiopsicosocial.antecedentesMedicos.antecedente">
+        </div>
+        <div class="form-row mt-2">
+            <!-- Campo de entrada de texto para el diagnóstico -->
+            <div class="col-md-6">
+                <label for="diagnostico">Diagnóstico preexistente:</label>
+                <input id="diagnostico" class="form-control" type="text" placeholder="Ej. Diabetes" [(ngModel)]="diagnostico">
+            </div>
+            
+            <!-- Selector de fecha para la fecha del diagnóstico -->
+            <div class="col-md-6">
+                <label for="fechaDiagnostico">Fecha:</label>
+                <input id="fechaDiagnostico" class="form-control" type="date" [(ngModel)]="fechaDiagnostico">
+            </div>
+        </div>
+        
+      <!-- Antecedentes familiares -->
+      <div class="mt-2">
+        <label for="antecedentesFamiliares">Antecedentes familiares:</label>
+        <input id="antecedentesFamiliares" class="form-control" type="text" [(ngModel)]="historiaClinicaBiopsicosocial.antecedentesFamiliares">
+      </div>
+    </div>
+  
+    <!-- Estado actual -->
+    <div class="section mt-3">
+      <h4>Estado actual</h4>
+      <label for="esferaSocial">Esfera social:</label>
+      <input id="esferaSocial" class="form-control mt-2" type="text" [(ngModel)]="estadoActual.esferaSocial">
+
+      <label for="esferaCognitiva">Esfera cognitiva:</label>
+      <input id="esferaCognitiva" class="form-control mt-2" type="text" [(ngModel)]="estadoActual.esferaCognitiva">
+
+      <label for="esferaPsicologica">Esfera psicológica:</label>
+      <input id="esferaPsicologica" class="form-control mt-2" type="text" [(ngModel)]="estadoActual.esferaPsicologica">
+
+      <label for="otraInformacion">Otra información de interés:</label>
+      <input id="otraInformacion" class="form-control mt-2" type="text" [(ngModel)]="estadoActual.otraInformacion">
+  
+      <!-- Nuevo diagnostico -->
+      <div class="form-row mt-2">
+        <div class="col">
+          <label for="nuevoDiagnostico">Nuevo diagnóstico:</label>
+          <input id="nuevoDiagnostico" class="form-control" type="text" [(ngModel)]="estadoActual.nuevoDiagnostico.diagnostico">
+        </div>
+        <div class="col">
+          <label for="fechaNuevoDiagnostico">Fecha:</label>
+          <input id="fechaNuevoDiagnostico" class="form-control" type="date" [(ngModel)]="estadoActual.nuevoDiagnostico.fecha">
+        </div>
+        <div class="col">
+          <label for="nombreClinico">Nombre del clínico:</label>
+          <input id="nombreClinico" class="form-control" type="text" [(ngModel)]="estadoActual.nuevoDiagnostico.nombreClinico">
+        </div>
+      </div>
+    </div>
+</div>

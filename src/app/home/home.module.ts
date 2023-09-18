@@ -11,8 +11,7 @@ import { PatientRegisterComponent } from './patient-dashboard/patient-register/p
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatientSearchComponent } from './patient-dashboard/profile/patient-search/patient-search.component';
 import { DatosPersonalesComponent } from './patient-dashboard/patient-register/datos-personales/datos-personales.component';
-import { DiagnosticoComponent } from './patient-dashboard/patient-register/diagnostico/diagnostico.component';
-import { TestPuntuacionComponent } from './patient-dashboard/patient-register/test-puntuacion/test-puntuacion.component';
+
 
 @NgModule({
   declarations: [
@@ -24,8 +23,6 @@ import { TestPuntuacionComponent } from './patient-dashboard/patient-register/te
     PatientRegisterComponent,
     PatientSearchComponent,
     DatosPersonalesComponent,
-    DiagnosticoComponent,
-    TestPuntuacionComponent,
   ],
   imports: [
     CommonModule,

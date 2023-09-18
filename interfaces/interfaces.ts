@@ -47,13 +47,48 @@ export interface Source {
 }
 
 
-export default interface Patient{
-  id:string;
+export default interface Patient {
+  id: string;
   datosPersonales?: DatosPersonales;
+  anamnesis?: Anamnesis;  // Agregado
   diagnostico?: Diagnostico;
-  test?: Test[]; 
-  informe?: string; 
+  test?: Test[];
+  informe?: string;
 }
+
+export interface Anamnesis {
+  motivoConsulta: string;
+  historiaClinicaBiopsicosocial: HistoriaClinicaBiopsicosocial;
+  estadoActual: EstadoActual;
+}
+
+export interface HistoriaClinicaBiopsicosocial {
+  antecedentesMedicos: AntecedentesMedicos;
+  antecedentesFamiliares: string;
+}
+
+export interface AntecedentesMedicos {
+  antecedente: string;
+  diagnostico: string;  
+  fechaDiagnostico: string;  
+}
+
+
+export interface EstadoActual {
+  estado: string;
+  esferaSocial: string;
+  esferaCognitiva: string;
+  esferaPsicologica: string;
+  otraInformacion: string;
+  nuevoDiagnostico: NuevoDiagnostico;
+}
+
+export interface NuevoDiagnostico {
+  diagnostico: string;
+  fecha: string;  // Utiliza el servicio que ya tienes para obtener la fecha actual
+  nombreClinico: string;
+}
+
 
 export interface DatosPersonales {
   nombre: string;
