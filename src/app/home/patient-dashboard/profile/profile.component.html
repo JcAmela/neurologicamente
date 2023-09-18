@@ -1,16 +1,18 @@
-<div class="container mt-4">
+<div class="container-fluid mt-4">
     <h2 class="mb-4">Pacientes</h2>
-    
-    <!-- Barra de búsqueda -->
-    <app-patient-search (search)="handleSearch($event)"></app-patient-search>
 
-    
+    <!-- Barra de búsqueda -->
+    <app-patient-search [allPatients]="allPatients" (search)="handleFilteredPatients($event)">
+    </app-patient-search>
+
+
     <!-- Listado de pacientes en forma de tarjetas -->
     <div class="row">
         <div *ngFor="let patient of patients" class="col-md-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{ patient.datosPersonales?.nombre }} {{ patient.datosPersonales?.apellidos }}</h5>
+                    <h5 class="card-title">{{ patient.datosPersonales?.nombre }} {{ patient.datosPersonales?.apellidos
+                        }}</h5>
                     <p class="card-text">Edad: {{ getPatientAge(patient.datosPersonales?.fechaNacimiento) }} años</p>
                     <p class="card-text">Sexo: {{ patient.datosPersonales?.sexoBiologico }}</p>
                     <p class="card-text">Teléfono: {{ patient.datosPersonales?.telefono }}</p>

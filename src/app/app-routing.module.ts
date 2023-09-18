@@ -9,7 +9,6 @@ import { HomeComponent } from './home/home.component';
 import { PatientDashboardComponent } from './home/patient-dashboard/patient-dashboard.component';
 import { HistoryComponent } from './home/patient-dashboard/history/history.component';
 import { ProfileComponent } from './home/patient-dashboard/profile/profile.component';
-import { TestComponent } from './home/patient-dashboard/profile/test/test.component';
 import { PatientRegisterComponent } from './home/patient-dashboard/patient-register/patient-register.component'; 
 
 import { AuthGuard } from './guard/auth.guard';
@@ -34,9 +33,6 @@ const routes: Routes = [
       { 
         path: 'profile', 
         component: ProfileComponent,
-        children: [
-          { path: 'test', component: TestComponent }
-        ]
       },
       { path: 'patient-register', component: PatientRegisterComponent } 
     ]

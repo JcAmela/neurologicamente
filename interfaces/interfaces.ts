@@ -52,7 +52,7 @@ export default interface Patient{
   datosPersonales?: DatosPersonales;
   diagnostico?: Diagnostico;
   test?: Test[]; 
-
+  informe?: string; 
 }
 
 export interface DatosPersonales {

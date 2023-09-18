@@ -25,7 +25,6 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
-  
 
   getPatientAge(birthDate?: Date | string): number {
     if (typeof birthDate === 'string') {
@@ -36,23 +35,8 @@ export class ProfileComponent implements OnInit {
 
     return this.dateService.getAge(birthDate.toISOString().split('T')[0]);
   }
-  handleSearch(term: string) {
-    if (!term.trim()) {
-      // Si el término de búsqueda está vacío, carga todos los pacientes nuevamente.
-      this.patients = this.allPatients.slice();
-      return;
-    }
-  
-    // Convertimos el término de búsqueda a minúsculas para hacer la búsqueda insensible a mayúsculas/minúsculas.
-    term = term.toLowerCase();
-  
-    // Filtramos el array de pacientes.
-    this.patients = this.allPatients.filter(patient => {
-      const name = patient.datosPersonales?.nombre?.toLowerCase() || '';
-      const surname = patient.datosPersonales?.apellidos?.toLowerCase() || '';
-      const phone = patient.datosPersonales?.telefono || '';
-      return name.includes(term) || surname.includes(term) || phone.includes(term);
-    });
+
+  handleFilteredPatients(filteredPatients: Patient[]) {
+    this.patients = filteredPatients;
   }
-  
 }

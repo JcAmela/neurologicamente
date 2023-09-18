@@ -1,7 +1,7 @@
-<!-- Barra de búsqueda -->
-<div class="input-group mb-4">
-  <input type="text" class="form-control" placeholder="Buscar paciente..." aria-label="Buscar paciente" [(ngModel)]="searchTerm">
+<div class="input-group mb-4 search-container">
+  <input type="text" class="form-control" placeholder="Buscar paciente..." aria-label="Buscar paciente" 
+         [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
   <div class="input-group-append">
-      <button class="btn btn-outline-primary" type="button" (click)="onSearch()">Buscar</button>
+      <button class="btn search-button" type="button" (click)="onSearch()">Buscar</button>
   </div>
 </div>

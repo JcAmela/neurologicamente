@@ -1,4 +1,4 @@
-import { DateService } from '../../../services/data.service';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
@@ -7,10 +7,12 @@ import { NewsCardComponent } from '../components/newscard/newscard.component';
 import { PatientDashboardComponent } from './patient-dashboard/patient-dashboard.component';
 import { HistoryComponent } from './patient-dashboard/history/history.component';
 import { ProfileComponent } from './patient-dashboard/profile/profile.component';
-import { TestComponent } from './patient-dashboard/profile/test/test.component';
 import { PatientRegisterComponent } from './patient-dashboard/patient-register/patient-register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatientSearchComponent } from './patient-dashboard/profile/patient-search/patient-search.component';
+import { DatosPersonalesComponent } from './patient-dashboard/patient-register/datos-personales/datos-personales.component';
+import { DiagnosticoComponent } from './patient-dashboard/patient-register/diagnostico/diagnostico.component';
+import { TestPuntuacionComponent } from './patient-dashboard/patient-register/test-puntuacion/test-puntuacion.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +22,10 @@ import { PatientSearchComponent } from './patient-dashboard/profile/patient-sear
     HistoryComponent,
     ProfileComponent,
     PatientRegisterComponent,
-    TestComponent,
-    PatientSearchComponent
+    PatientSearchComponent,
+    DatosPersonalesComponent,
+    DiagnosticoComponent,
+    TestPuntuacionComponent,
   ],
   imports: [
     CommonModule,
