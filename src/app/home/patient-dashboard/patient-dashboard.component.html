@@ -8,13 +8,7 @@
             Perfil <i class="fas fa-user"></i>
           </a>
           <a href="javascript:void(0)" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="showComponent('register')">
-            Registro del Paciente <i class="fas fa-file-medical"></i>
-          </a>
-          <a href="javascript:void(0)" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="showComponent('history')">
-            Anamnesis <i class="fas fa-notes-medical"></i>
-          </a>
-          <a href="javascript:void(0)" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="showComponent('test')">
-            Pruebas <i class="fas fa-vial"></i>
+            Registro de un nuevo paciente <i class="fas fa-file-medical"></i>
           </a>
         </div>
       </div>
@@ -27,10 +21,5 @@
         <div *ngIf="activeComponent === 'register'">
           <app-patient-register></app-patient-register>
         </div>
-        <div *ngIf="activeComponent === 'history'">
-          <app-history></app-history>
-        </div>
-      </div>
-
     </div>
 </div>

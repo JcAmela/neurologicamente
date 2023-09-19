@@ -1,0 +1,104 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f6f7fb;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 3% auto;
+    padding: 25px 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+}
+
+h2, h4 {
+    color: #007BFF;
+    font-weight: 500;
+}
+
+h4 {
+    border-bottom: 2px solid #e6e7e9;
+    position: relative;
+    padding-bottom: 8px;
+}
+
+h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: #007BFF;
+}
+
+/* Estilos para <label> */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+label:hover {
+    color: #007BFF;
+    cursor: pointer;
+}
+
+input:focus + label, 
+input:focus ~ label {
+    color: #007BFF;
+    font-weight: bold;
+}
+
+/* Estilo para inputs con foco y su label asociado, 
+   para brindar retroalimentación visual sobre el campo activo */
+input:focus {
+    border: 1px solid #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,123,255,0.25);
+}
+
+/* Efecto hover para inputs: para hacer evidente la interactividad */
+input:hover {
+    border-color: #007BFF;
+}
+
+/* Estilo para separar visualmente las secciones del formulario */
+.section {
+    padding: 25px 0;
+    border-bottom: 1px solid #e6e7e9;
+    position: relative;
+}
+
+.section:not(:last-child) {
+    margin-bottom: 25px;
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e6e7e9, transparent);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 15px;
+    margin-top: 8px;
+    border: 1px solid #e6e7e9;
+    border-radius: 4px;
+    transition: border 0.2s;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}

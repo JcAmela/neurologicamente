@@ -5,7 +5,7 @@ import { HomeComponent } from './home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NewsCardComponent } from '../components/newscard/newscard.component';
 import { PatientDashboardComponent } from './patient-dashboard/patient-dashboard.component';
-import { HistoryComponent } from './patient-dashboard/history/history.component';
+import { HistoryComponent } from './patient-dashboard/patient-register/anamesis/history.component';
 import { ProfileComponent } from './patient-dashboard/profile/profile.component';
 import { PatientRegisterComponent } from './patient-dashboard/patient-register/patient-register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

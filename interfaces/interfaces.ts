@@ -50,7 +50,7 @@ export interface Source {
 export default interface Patient {
   id: string;
   datosPersonales?: DatosPersonales;
-  anamnesis?: Anamnesis;  // Agregado
+  anamnesis?: Anamnesis;
   diagnostico?: Diagnostico;
   test?: Test[];
   informe?: string;
@@ -69,10 +69,9 @@ export interface HistoriaClinicaBiopsicosocial {
 
 export interface AntecedentesMedicos {
   antecedente: string;
-  diagnostico: string;  
-  fechaDiagnostico: string;  
+  diagnostico: string;
+  fechaDiagnostico: Date | null;
 }
-
 
 export interface EstadoActual {
   estado: string;
@@ -85,7 +84,7 @@ export interface EstadoActual {
 
 export interface NuevoDiagnostico {
   diagnostico: string;
-  fecha: string;  // Utiliza el servicio que ya tienes para obtener la fecha actual
+  fecha: Date | null;
   nombreClinico: string;
 }
 
@@ -102,7 +101,8 @@ export interface DatosPersonales {
 
 export interface Diagnostico {
   nombreDiagnostico: string;
-  dominiosComprometidos: string[]; 
+  fecha: Date | null;
+  nombreClinico: string;
 }
 
 export interface Test {

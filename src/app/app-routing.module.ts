@@ -7,7 +7,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { HomeComponent } from './home/home.component';
 import { PatientDashboardComponent } from './home/patient-dashboard/patient-dashboard.component';
-import { HistoryComponent } from './home/patient-dashboard/history/history.component';
+import { HistoryComponent } from './home/patient-dashboard/patient-register/anamesis/history.component';
 import { ProfileComponent } from './home/patient-dashboard/profile/profile.component';
 import { PatientRegisterComponent } from './home/patient-dashboard/patient-register/patient-register.component'; 
 
