@@ -1,0 +1,92 @@
+<p>anamnesis works!</p>
+<div class="container mt-5">
+    <form (ngSubmit)="saveToDatabase()">
+    <h2 class="mb-5">Anamnesis</h2>
+  
+    <div class="section mb-4">
+      <h4 class="mb-3">Motivo de consulta</h4>
+      <div class="form-group">
+        <label for="motivoConsulta">Motivo de consulta:</label>
+        <input id="motivoConsulta" class="form-control" type="text" [(ngModel)]="anamnesis.motivoConsulta"
+          placeholder="Ej. Dificultades en la memoria reciente">
+      </div>
+    </div>
+  
+    <div class="section mb-4">
+      <h4 class="mb-3">Antecedentes</h4>
+  
+      <div class="form-group">
+        <label for="biopsicosocial">Historia clínica/biopsicosocial:</label>
+        <input id="biopsicosocial" class="form-control" type="text" 
+        [(ngModel)]="anamnesis.historiaClinicaBiopsicosocial.antecedentesMedicos.antecedente"
+          placeholder="Ej. Historia de conmociones cerebrales">
+      </div>
+  
+      <div class="form-group">
+        <label for="antecedenteMedico">Antecedentes médicos:</label>
+        <input id="antecedenteMedico" class="form-control" type="text" 
+        [(ngModel)]="anamnesis.historiaClinicaBiopsicosocial.antecedentesMedicos.diagnostico"
+          placeholder="Ej. Episodio de isquemia transitoria">
+      </div>
+  
+      <div class="form-row ">
+        <div class="col-md-6 form-group">
+          <label for="diagnostico">Diagnóstico preexistente:</label>
+          <input id="diagnostico" class="form-control mb-2" type="text"
+            placeholder="Ej. Enfermedad de Alzheimer en fase inicial" 
+            [(ngModel)]="anamnesis.historiaClinicaBiopsicosocial.antecedentesMedicos.diagnostico">
+  
+          <label for="fechaDiagnostico">Fecha del Diagnóstico</label>
+          <input id="fechaDiagnostico" class="form-control" type="date" 
+          [(ngModel)]="anamnesis.historiaClinicaBiopsicosocial.antecedentesMedicos.fechaDiagnostico"
+            placeholder="Ej. 12/03/2020">
+        </div>
+  
+        <div class="form-group">
+          <label for="antecedentesFamiliares">Antecedentes familiares:</label>
+          <input id="antecedentesFamiliares" class="form-control" type="text"
+            [(ngModel)]="anamnesis.historiaClinicaBiopsicosocial.antecedentesFamiliares" 
+            placeholder="Ej. Madre con enfermedad de Parkinson">
+        </div>
+      </div>
+  
+      <div class="section mb-4">
+        <h4 class="mb-3">Estado actual</h4>
+        <label for="esferaSocial">Esfera social:</label>
+        <input id="esferaSocial" class="form-control mt-2" type="text" [(ngModel)]="anamnesis.estadoActual.esferaSocial"
+          placeholder="Ej. Retiro social debido a vergüenza por olvidos">
+  
+        <label for="esferaCognitiva">Esfera cognitiva:</label>
+        <input id="esferaCognitiva" class="form-control mt-2" type="text" [(ngModel)]="anamnesis.estadoActual.esferaCognitiva"
+          placeholder="Ej. Dificultades en tareas de cálculo mental">
+  
+        <label for="esferaPsicologica">Esfera psicológica:</label>
+        <input id="esferaPsicologica" class="form-control mt-2" type="text" [(ngModel)]="anamnesis.estadoActual.esferaPsicologica"
+          placeholder="Ej. Depresión leve asociada a deterioro cognitivo">
+  
+        <label for="otraInformacion">Otra información de interés:</label>
+        <input id="otraInformacion" class="form-control mt-2" type="text" [(ngModel)]="anamnesis.estadoActual.otraInformacion"
+          placeholder="Ej. Cambios de humor repentinos">
+  
+        <!-- Nuevo diagnóstico y su fecha -->
+        <div class="col-md-6 form-group">
+          <label for="nuevoDiagnostico">Nuevo diagnóstico:</label>
+          <input id="nuevoDiagnostico" class="form-control mb-2" type="text"
+            [(ngModel)]="anamnesis.estadoActual.nuevoDiagnostico.diagnostico" placeholder="Ej. Disfunción ejecutiva">
+  
+          <label for="fechaNuevoDiagnostico">Fecha del nuevo diagnóstico:</label>
+          <input id="fechaNuevoDiagnostico" class="form-control" type="date"
+            [(ngModel)]="anamnesis.estadoActual.nuevoDiagnostico.fecha">
+  
+          <div class="col">
+            <label for="nombreClinico">Nombre del clínico:</label>
+            <input id="nombreClinico" class="form-control" type="text" 
+            [(ngModel)]="anamnesis.estadoActual.nuevoDiagnostico.nombreClinico" 
+            placeholder="Ej. Dra. Mariana Torres">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  </div>

@@ -9,6 +9,7 @@ export class User {
     this.password = password;
     this.confirmPassword = confirmPassword;
     this.id = id;
+
   }
 
   // Método para convertir la instancia a un objeto simple
@@ -54,6 +55,7 @@ export default interface Patient {
   diagnostico?: Diagnostico;
   test?: Test[];
   informe?: string;
+  fechaActual?: string; 
 }
 
 export interface Anamnesis {

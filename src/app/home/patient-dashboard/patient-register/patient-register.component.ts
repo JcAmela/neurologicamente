@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { PatientsService } from './../../../../../services/patients.service';
 import { DateService } from '../../../../../services/data.service';
 import Patient from './../../../../../interfaces/interfaces';
@@ -13,6 +13,7 @@ export class PatientRegisterComponent implements OnInit {
   registerForm: FormGroup = this.fb.group({});
   todayDate: string = '';
   submitMessage: string = '';  
+  currentStep: number = 1; 
 
   constructor(
     private fb: FormBuilder,
@@ -22,72 +23,70 @@ export class PatientRegisterComponent implements OnInit {
 
   ngOnInit() {
     this.todayDate = this.dateService.getToday();
-
     this.registerForm = this.fb.group({
-      datosPersonales: this.fb.group({
-        nombre: ['', Validators.required],
-        apellidos: ['', Validators.required],
-        fechaNacimiento: ['', Validators.required],
-        fechaActual: [this.todayDate, Validators.required],
-        sexoBiologico: ['Hombre', Validators.required],
-        direccion: ['', Validators.required],
-        telefono: ['' ]  // Solo permite 10 dígitos
-      }),
-      diagnostico: this.fb.group({
-        nombreDiagnostico: [''],
-        dominiosComprometidos: this.fb.array([]),
-        informe: ['']  
-      })
+      datosPersonales: this.fb.group({}),
+      diagnostico: this.fb.group({})
     });
   }
 
-  get datosPersonalesFormGroup(): FormGroup {
-    return this.registerForm.get('datosPersonales')! as FormGroup;
-}
-get diagnosticoGroup(): FormGroup {
-  return this.registerForm.get('diagnostico')! as FormGroup;
-}
-
-  get tests(): FormArray {
-    return this.registerForm.get('test') as FormArray;
+  get progressBarValue(): number {
+    return this.currentStep * 50;
   }
 
-  logInvalidControls(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(key => {
-      const control = formGroup.controls[key];
-      if (control instanceof FormGroup) {
-        // Recursively check sub-groups
-        this.logInvalidControls(control);
-      } else if (!control.valid) {
-        console.log(`Invalid control: ${key} - Error:`, control.errors);
+  nextStep() {
+    if (this.currentStep === 1) {
+      this.confirmAndSavePersonalData();
+    } else if (this.currentStep < 2) {
+      this.currentStep++;
+    } else {
+      this.onSubmit();
+    }
+  }
+
+  previousStep() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+    }
+  }
+
+  confirmAndSavePersonalData() {
+    if (window.confirm('¿Estás seguro de haber rellenado los campos correctamente?')) {
+      const patientData: Patient = this.registerForm?.get('datosPersonales')?.value
+
+      if (patientData) {
+        patientData.fechaActual = this.todayDate;
       }
-    });
+
+      this.patientsService.addPatient(patientData).subscribe(
+        () => {
+          this.submitMessage = "Datos personales guardados correctamente";
+          this.nextStep();
+        },
+        error => {
+          this.submitMessage = "Error guardando datos personales: " + error.message;
+        }
+      );
+    }
   }
 
   onSubmit() {
-    console.log('Arrives at onSubmit');
-
     if (this.registerForm.valid) {
-      console.log('Form validated');
-
       const newPatient: Patient = this.registerForm.value;
       if (newPatient.datosPersonales) {
-        console.log('If datos personales exists, save the date');
         newPatient.datosPersonales.fechaActual = this.todayDate;
       }
 
       this.patientsService.addPatient(newPatient).subscribe(
         () => {
-          this.submitMessage = "Patient added successfully";
+          this.submitMessage = "Paciente registrado exitosamente";
           this.registerForm.reset();
         },
         error => {
-          this.submitMessage = "Error adding patient: " + error.message;
+          this.submitMessage = "Error registrando paciente: " + error.message;
         }
       );
     } else {
-      console.log('Form is not valid');
-      this.logInvalidControls(this.registerForm);
+      // Puedes agregar lógica adicional aquí si lo consideras necesario
     }
   }
 }

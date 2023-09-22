@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { Anamnesis } from '../../../../../../interfaces/interfaces';  // Asegúrate de especificar el path correcto
 
 @Component({
-  selector: 'app-history',
-  templateUrl: './history.component.html',
-  styleUrls: ['./history.component.css']
+  selector: 'app-anamnesis',
+  templateUrl: './anamnesis.component.html',
+  styleUrls: ['./anamnesis.component.css']
 })
-export class HistoryComponent {
+export class AnamnesisComponent {
   anamnesis: Anamnesis = {
     motivoConsulta: '',
     historiaClinicaBiopsicosocial: {
