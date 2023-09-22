@@ -9,15 +9,18 @@
   <div class="mt-3" *ngIf="currentStep === 1">
     <!-- Step 1: Datos Personales -->
     <h3>Datos Personales</h3>
-    <app-datos-personales></app-datos-personales>
+    <div [formGroup]="registerForm">
+      <app-datos-personales formControlName="datosPersonales"></app-datos-personales>
+  </div>
     <button class="btn btn-primary float-right" (click)="nextStep()">Siguiente</button>
   </div>
 
   <div *ngIf="currentStep === 2">
     <!-- Step 2: Anamnesis -->
     <h3>Anamnesis</h3>
-    <app-anamnesis></app-anamnesis>
-    <button class="btn btn-secondary" (click)="previousStep()">Anterior</button>
+    <div [formGroup]="registerForm">
+      <app-anamnesis formControlName="anamnesis"></app-anamnesis>
+  </div>
     <button class="btn btn-success float-right" (click)="onSubmit()">Finalizar</button>
   </div>
 </div>

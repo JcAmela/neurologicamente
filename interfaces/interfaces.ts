@@ -60,23 +60,15 @@ export default interface Patient {
 
 export interface Anamnesis {
   motivoConsulta: string;
-  historiaClinicaBiopsicosocial: HistoriaClinicaBiopsicosocial;
+  historiaClinicaBiopsicosocial: string;
+  antecedentesMedicos:string,
   estadoActual: EstadoActual;
+  antecedentesFamiliares:string,
 }
 
-export interface HistoriaClinicaBiopsicosocial {
-  antecedentesMedicos: AntecedentesMedicos;
-  antecedentesFamiliares: string;
-}
 
-export interface AntecedentesMedicos {
-  antecedente: string;
-  diagnostico: string;
-  fechaDiagnostico: Date | null;
-}
 
 export interface EstadoActual {
-  estado: string;
   esferaSocial: string;
   esferaCognitiva: string;
   esferaPsicologica: string;

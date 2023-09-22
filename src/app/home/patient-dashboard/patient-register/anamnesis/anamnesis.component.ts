@@ -9,16 +9,11 @@ import { Anamnesis } from '../../../../../../interfaces/interfaces';  // Asegúr
 export class AnamnesisComponent {
   anamnesis: Anamnesis = {
     motivoConsulta: '',
-    historiaClinicaBiopsicosocial: {
-      antecedentesMedicos: {
-        antecedente: '',
-        diagnostico: '',
-        fechaDiagnostico: null
-      },
-      antecedentesFamiliares: ''
-    },
+    historiaClinicaBiopsicosocial: '',
+    antecedentesMedicos: '',
+    antecedentesFamiliares: '',
+
     estadoActual: {
-      estado: '',
       esferaSocial: '',
       esferaCognitiva: '',
       esferaPsicologica: '',
@@ -31,7 +26,7 @@ export class AnamnesisComponent {
     }
   };
 
-  constructor() {}
+  constructor() { }
 
   saveToDatabase() {
     // Llamada a un servicio para guardar en la base de datos.

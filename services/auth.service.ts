@@ -19,7 +19,12 @@ export class AuthService {
   constructor() {}
 
   register(email: string, password: string): Observable<any> {
-    return from(createUserWithEmailAndPassword(this.auth, email, password));
+    return from(
+      createUserWithEmailAndPassword(this.auth, email, password).catch(error => {
+        console.error('Error al registrar usuario: ', error);
+        throw new Error('Registro fallido');
+      })
+    );
   }
 
   login(email: string, password: string): Observable<any> {

@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Component, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { PatientsService } from './../../../../../services/patients.service';
-import { DateService } from '../../../../../services/data.service';
+import { DataService } from '../../../../../services/data.service';
 import Patient from './../../../../../interfaces/interfaces';
+import { DatosPersonalesComponent } from './datos-personales/datos-personales.component';
 
 @Component({
   selector: 'app-patient-register',
   templateUrl: './patient-register.component.html',
   styleUrls: ['./patient-register.component.css']
 })
-export class PatientRegisterComponent implements OnInit {
-  registerForm: FormGroup = this.fb.group({});
+export class PatientRegisterComponent implements OnInit, AfterViewInit {
+  registerForm!: FormGroup;  
   todayDate: string = '';
   submitMessage: string = '';  
   currentStep: number = 1; 
@@ -18,15 +19,24 @@ export class PatientRegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private patientsService: PatientsService,
-    private dateService: DateService  
+    private dataService: DataService,
+    private cdRef: ChangeDetectorRef  
   ) {}
 
+  @ViewChild(DatosPersonalesComponent) private datosPersonalesComponent!: DatosPersonalesComponent;
+
   ngOnInit() {
-    this.todayDate = this.dateService.getToday();
+    this.todayDate = this.dataService.getToday();
     this.registerForm = this.fb.group({
-      datosPersonales: this.fb.group({}),
-      diagnostico: this.fb.group({})
+      datosPersonales: new FormControl(null), 
+      anamnesis: this.fb.group({})  
     });
+  }
+
+  ngAfterViewInit() {
+    const datosPersonalesControl = this.datosPersonalesComponent.datosPersonalesForm;
+    this.registerForm.addControl('datosPersonales', datosPersonalesControl);
+    this.cdRef.detectChanges();
   }
 
   get progressBarValue(): number {
@@ -43,24 +53,16 @@ export class PatientRegisterComponent implements OnInit {
     }
   }
 
-  previousStep() {
-    if (this.currentStep > 1) {
-      this.currentStep--;
-    }
-  }
-
   confirmAndSavePersonalData() {
     if (window.confirm('¿Estás seguro de haber rellenado los campos correctamente?')) {
-      const patientData: Patient = this.registerForm?.get('datosPersonales')?.value
-
+      const patientData: Patient = this.registerForm?.get('datosPersonales')?.value;
       if (patientData) {
         patientData.fechaActual = this.todayDate;
       }
-
       this.patientsService.addPatient(patientData).subscribe(
         () => {
           this.submitMessage = "Datos personales guardados correctamente";
-          this.nextStep();
+          this.currentStep++; 
         },
         error => {
           this.submitMessage = "Error guardando datos personales: " + error.message;
@@ -75,7 +77,6 @@ export class PatientRegisterComponent implements OnInit {
       if (newPatient.datosPersonales) {
         newPatient.datosPersonales.fechaActual = this.todayDate;
       }
-
       this.patientsService.addPatient(newPatient).subscribe(
         () => {
           this.submitMessage = "Paciente registrado exitosamente";
@@ -85,8 +86,6 @@ export class PatientRegisterComponent implements OnInit {
           this.submitMessage = "Error registrando paciente: " + error.message;
         }
       );
-    } else {
-      // Puedes agregar lógica adicional aquí si lo consideras necesario
     }
   }
 }

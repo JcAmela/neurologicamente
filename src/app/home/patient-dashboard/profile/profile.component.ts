@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientsService } from './../../../../../services/patients.service';
-import { DateService } from '../../../../../services/data.service';
+import { DataService } from '../../../../../services/data.service';
 import Patient from './../../../../../interfaces/interfaces';
 
 @Component({
@@ -12,7 +12,7 @@ export class ProfileComponent implements OnInit {
   patients: Patient[] = [];
   allPatients: Patient[] = [];
 
-  constructor(private patientsService: PatientsService, private dateService: DateService) {}
+  constructor(private patientsService: PatientsService, private dataService: DataService) {}
 
   ngOnInit() {
     this.patientsService.getPatientsOfCurrentUser().subscribe(
@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
 
     if (!(birthDate instanceof Date)) return 0;
 
-    return this.dateService.getAge(birthDate.toISOString().split('T')[0]);
+    return this.dataService.getAge(birthDate.toISOString().split('T')[0]);
   }
 
   handleFilteredPatients(filteredPatients: Patient[]) {
