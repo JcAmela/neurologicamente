@@ -17,8 +17,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.patientsService.getPatientsOfCurrentUser().subscribe(
       data => {
-        this.allPatients = data; 
-        this.patients = data; 
+        console.log(data);  // agregar esta línea
+        this.allPatients = data;
+        this.patients = data;
       },
       error => {
         console.error('Error al cargar pacientes:', error);

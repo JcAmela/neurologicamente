@@ -1,37 +1,61 @@
-import { Component } from '@angular/core';
-import { Anamnesis } from '../../../../../../interfaces/interfaces';  // Asegúrate de especificar el path correcto
+import { Component, OnInit, forwardRef } from '@angular/core';
+import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-anamnesis',
   templateUrl: './anamnesis.component.html',
-  styleUrls: ['./anamnesis.component.css']
-})
-export class AnamnesisComponent {
-  anamnesis: Anamnesis = {
-    motivoConsulta: '',
-    historiaClinicaBiopsicosocial: '',
-    antecedentesMedicos: '',
-    antecedentesFamiliares: '',
-
-    estadoActual: {
-      esferaSocial: '',
-      esferaCognitiva: '',
-      esferaPsicologica: '',
-      otraInformacion: '',
-      nuevoDiagnostico: {
-        diagnostico: '',
-        fecha: null,
-        nombreClinico: ''
-      }
+  styleUrls: ['./anamnesis.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AnamnesisComponent),
+      multi: true
     }
-  };
+  ]
+})
+export class AnamnesisComponent implements OnInit, ControlValueAccessor {
+  anamnesisForm: FormGroup;
 
-  constructor() { }
-
-  saveToDatabase() {
-    // Llamada a un servicio para guardar en la base de datos.
-    // this.yourService.saveAnamnesis(this.anamnesis).subscribe(response => {
-    //   // Acciones a realizar después de guardar en la base de datos.
-    // });
+  constructor(private fb: FormBuilder) {
+    this.anamnesisForm = this.fb.group({
+      motivoConsulta: ['', Validators.required],
+      historiaClinicaBiopsicosocial: [''],
+      antecedentesMedicos: [''],
+      antecedentesFamiliares: [''],
+      estadoActual: this.fb.group({
+        esferaSocial: [''],
+        esferaCognitiva: [''],
+        esferaPsicologica: [''],
+        otraInformacion: [''],
+        nuevoDiagnostico: this.fb.group({
+          diagnostico: [''],
+          fecha: [''],
+          nombreClinico: ['']
+        })
+      })
+    });
   }
+
+  ngOnInit() {}
+
+  writeValue(value: any): void {
+    if (value) {
+      this.anamnesisForm.patchValue(value, { emitEvent: false });
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.anamnesisForm.valueChanges.subscribe(fn);
+  }
+
+  registerOnTouched(fn: any): void {}
+
+  setDisabledState?(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.anamnesisForm.disable({ emitEvent: false });
+    } else {
+      this.anamnesisForm.enable({ emitEvent: false });
+    }
+  }
+
 }

@@ -22,9 +22,7 @@ export class User {
       };
   }
 }
-
-
-
+  
 export interface NewsResponse {
   status: string;
   totalResults: number;
@@ -52,8 +50,6 @@ export default interface Patient {
   id: string;
   datosPersonales?: DatosPersonales;
   anamnesis?: Anamnesis;
-  diagnostico?: Diagnostico;
-  test?: Test[];
   informe?: string;
   fechaActual?: string; 
 }
@@ -65,8 +61,6 @@ export interface Anamnesis {
   estadoActual: EstadoActual;
   antecedentesFamiliares:string,
 }
-
-
 
 export interface EstadoActual {
   esferaSocial: string;

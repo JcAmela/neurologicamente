@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { Firestore, collection, addDoc, query, getDocs, doc, getDoc, limit, orderBy } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, query, getDocs, doc, getDoc, limit, orderBy,updateDoc } from '@angular/fire/firestore';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Patient from 'interfaces/interfaces';
+import { setDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -24,20 +25,35 @@ export class PatientsService {
     return from(this._getPatientsOfCurrentUser());
   }
 
-  // Añadir un nuevo paciente
-  addPatient(patientData: Patient): Observable<void> {
-    return new Observable<void>((observer) => {
-      this.checkAuthentication();
-      const user = this.auth.currentUser;
-      const psicologoUID = user!.uid;
-      addDoc(collection(this.firestore, `users/${psicologoUID}/patients`), patientData).then(() => {
-        observer.next();
-        observer.complete();
-      }).catch((error) => {
-        observer.error(error);
-      });
+// Añadir un nuevo paciente
+addPatient(patientData: Patient): Observable<string> {
+    return new Observable<string>((observer) => {
+        this.checkAuthentication();
+        const user = this.auth.currentUser;
+        const psicologoUID = user!.uid;
+        addDoc(collection(this.firestore, `users/${psicologoUID}/patients`), {})
+            .then((docRef) => {
+                console.log('Documento paciente creado con ID: ', docRef.id);
+                const patientId = docRef.id;
+                addDoc(collection(this.firestore, `users/${psicologoUID}/patients/${patientId}/datosPersonales`), patientData)
+                    .then((docRef) => {
+                        console.log('Documento datosPersonales creado con ID: ', docRef.id);
+                        observer.next(patientId);
+                        observer.complete();
+                    })
+                    .catch((error) => {
+                        console.error('Error añadiendo documento a datosPersonales: ', error);
+                        observer.error(error);
+                    });
+            })
+            .catch((error) => {
+                console.error('Error añadiendo documento a pacientes: ', error);
+                observer.error(error);
+            });
     });
-  }
+}
+
+  
 
   // Método para obtener los últimos 10 pacientes registrados del usuario actual (devuelve una Promise).
   private async _getPatientsOfCurrentUser(): Promise<Patient[]> {
@@ -79,20 +95,49 @@ export class PatientsService {
     }
   }
 
-  // Guardar datos personales o anamnesis
-  savePatientData(data: Patient, collectionName: 'datosPersonales' | 'anamnesis'): Observable<void> {
-    return new Observable<void>((observer) => {
-      this.checkAuthentication();
-      const user = this.auth.currentUser;
-      const psicologoUID = user!.uid;
-      addDoc(collection(this.firestore, `users/${psicologoUID}/${collectionName}`), data).then(() => {
+
+
+// Método para guardar datos personales
+savePersonalData(data: any, patientId: string): Observable<void> {
+  return new Observable<void>((observer) => {
+    this.checkAuthentication();
+    const user = this.auth.currentUser;
+    const psicologoUID = user!.uid;
+    // Referencia a la sub-colección 'datos personales' del paciente específico
+    const datosPersonalesCollectionRef = collection(this.firestore, `users/${psicologoUID}/patients/${patientId}/datosPersonales/`);
+
+    addDoc(datosPersonalesCollectionRef, data)  
+      .then(() => {
         observer.next();
         observer.complete();
-      }).catch((error) => {
+      })
+      .catch((error) => {
         observer.error(error);
       });
-    });
-  }
+  });
+}
+
+// Método para guardar anamnesis
+saveAnamnesis(data: any, patientId: string): Observable<void> {
+  return new Observable<void>((observer) => {
+    this.checkAuthentication();
+    const user = this.auth.currentUser;
+    const psicologoUID = user!.uid;
+    const anamnesisCollectionRef = collection(this.firestore, `users/${psicologoUID}/patients/${patientId}/anamnesis`);
+
+    addDoc(anamnesisCollectionRef, data) 
+      .then(() => {
+        observer.next();
+        observer.complete();
+      })
+      .catch((error) => {
+        observer.error(error);
+      });
+  });
+}
+
+
+
 
 
 

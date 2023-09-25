@@ -1,75 +1,56 @@
-<div class="container mt-5">
-  <form (ngSubmit)="saveToDatabase()">
+
+  <form [formGroup]="anamnesisForm">
     <h2 class="mb-5">Anamnesis</h2>
-
-    <div class="section mb-4">
-      <h4 class="mb-3">Motivo de consulta</h4>
-      <div class="form-group">
-        <label for="motivoConsulta">Motivo de consulta:</label>
-        <input id="motivoConsulta" class="form-control" type="text" [(ngModel)]="anamnesis.motivoConsulta"
-          placeholder="Ej. Dificultades en la memoria reciente">
-      </div>
+    <div class="form-group">
+      <label for="motivoConsulta">Motivo de consulta</label>
+      <input formControlName="motivoConsulta" id="motivoConsulta" class="form-control" type="text" />
+    </div>
+    <div class="form-group">
+      <label for="historiaClinicaBiopsicosocial">Historia Clínica Biopsicosocial</label>
+      <textarea formControlName="historiaClinicaBiopsicosocial" id="historiaClinicaBiopsicosocial" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="antecedentesMedicos">Antecedentes Médicos</label>
+      <textarea formControlName="antecedentesMedicos" id="antecedentesMedicos" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="antecedentesFamiliares">Antecedentes Familiares</label>
+      <textarea formControlName="antecedentesFamiliares" id="antecedentesFamiliares" class="form-control"></textarea>
     </div>
 
-    <div class="section mb-4">
-      <h4 class="mb-3">Antecedentes</h4>
-
+    <h3>Estado Actual</h3>
+    <div formGroupName="estadoActual">
       <div class="form-group">
-        <label for="biopsicosocial">Historia clínica/biopsicosocial:</label>
-        <input id="biopsicosocial" class="form-control" type="text"
-          [(ngModel)]="anamnesis.historiaClinicaBiopsicosocial" placeholder="Ej. Historia de conmociones cerebrales">
+        <label for="esferaSocial">Esfera Social</label>
+        <textarea formControlName="esferaSocial" id="esferaSocial" class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="esferaCognitiva">Esfera Cognitiva</label>
+        <textarea formControlName="esferaCognitiva" id="esferaCognitiva" class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="esferaPsicologica">Esfera Psicológica</label>
+        <textarea formControlName="esferaPsicologica" id="esferaPsicologica" class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="otraInformacion">Otra Información</label>
+        <textarea formControlName="otraInformacion" id="otraInformacion" class="form-control"></textarea>
       </div>
 
-      <div class="form-group">
-        <label for="antecedentesMedicos">Antecedentes médicos:</label>
-        <input id="antecedentesMedicos" class="form-control" type="text" [(ngModel)]="anamnesis.antecedentesMedicos"
-          placeholder="Ej. Episodio de isquemia transitoria">
-      </div>
-
-
-      <div class="form-group">
-        <label for="antecedentesFamiliares">Antecedentes familiares:</label>
-        <input id="antecedentesFamiliares" class="form-control" type="text"
-          [(ngModel)]="anamnesis.antecedentesFamiliares" placeholder="Ej. Madre con enfermedad de Parkinson">
-      </div>
-    </div>
-
-    <div class="section mb-4">
-      <h4 class="mb-3">Estado actual</h4>
-      <label for="esferaSocial">Esfera social:</label>
-      <input id="esferaSocial" class="form-control mt-2" type="text" [(ngModel)]="anamnesis.estadoActual.esferaSocial"
-        placeholder="Ej. Retiro social debido a vergüenza por olvidos">
-
-      <label for="esferaCognitiva">Esfera cognitiva:</label>
-      <input id="esferaCognitiva" class="form-control mt-2" type="text"
-        [(ngModel)]="anamnesis.estadoActual.esferaCognitiva" placeholder="Ej. Dificultades en tareas de cálculo mental">
-
-      <label for="esferaPsicologica">Esfera psicológica:</label>
-      <input id="esferaPsicologica" class="form-control mt-2" type="text"
-        [(ngModel)]="anamnesis.estadoActual.esferaPsicologica"
-        placeholder="Ej. Depresión leve asociada a deterioro cognitivo">
-
-      <label for="otraInformacion">Otra información de interés:</label>
-      <input id="otraInformacion" class="form-control mt-2" type="text"
-        [(ngModel)]="anamnesis.estadoActual.otraInformacion" placeholder="Ej. Cambios de humor repentinos">
-
-      <!-- Nuevo diagnóstico y su fecha -->
-      <div class="col-md-6 form-group">
-        <label for="nuevoDiagnostico">Nuevo diagnóstico:</label>
-        <input id="nuevoDiagnostico" class="form-control mb-2" type="text"
-          [(ngModel)]="anamnesis.estadoActual.nuevoDiagnostico.diagnostico" placeholder="Ej. Disfunción ejecutiva">
-
-        <label for="fechaNuevoDiagnostico">Fecha del nuevo diagnóstico:</label>
-        <input id="fechaNuevoDiagnostico" class="form-control" type="date"
-          [(ngModel)]="anamnesis.estadoActual.nuevoDiagnostico.fecha">
-
-        <div class="col">
-          <label for="nombreClinico">Nombre del clínico:</label>
-          <input id="nombreClinico" class="form-control" type="text"
-            [(ngModel)]="anamnesis.estadoActual.nuevoDiagnostico.nombreClinico" placeholder="Ej. Dra. Mariana Torres">
+      <h4>Nuevo Diagnóstico</h4>
+      <div formGroupName="nuevoDiagnostico">
+        <div class="form-group">
+          <label for="diagnostico">Diagnóstico</label>
+          <input formControlName="diagnostico" id="diagnostico" class="form-control" type="text" />
+        </div>
+        <div class="form-group">
+          <label for="fecha">Fecha</label>
+          <input formControlName="fecha" id="fecha" class="form-control" type="date" />
+        </div>
+        <div class="form-group">
+          <label for="nombreClinico">Nombre Clínico</label>
+          <input formControlName="nombreClinico" id="nombreClinico" class="form-control" type="text" />
         </div>
       </div>
     </div>
   </form>
-
-</div>
