@@ -25,33 +25,38 @@ export class PatientsService {
     return from(this._getPatientsOfCurrentUser());
   }
 
+
 // Añadir un nuevo paciente
 addPatient(patientData: Patient): Observable<string> {
-    return new Observable<string>((observer) => {
-        this.checkAuthentication();
-        const user = this.auth.currentUser;
-        const psicologoUID = user!.uid;
-        addDoc(collection(this.firestore, `users/${psicologoUID}/patients`), {})
-            .then((docRef) => {
-                console.log('Documento paciente creado con ID: ', docRef.id);
-                const patientId = docRef.id;
-                addDoc(collection(this.firestore, `users/${psicologoUID}/patients/${patientId}/datosPersonales`), patientData)
-                    .then((docRef) => {
-                        console.log('Documento datosPersonales creado con ID: ', docRef.id);
-                        observer.next(patientId);
-                        observer.complete();
-                    })
-                    .catch((error) => {
-                        console.error('Error añadiendo documento a datosPersonales: ', error);
-                        observer.error(error);
-                    });
-            })
-            .catch((error) => {
-                console.error('Error añadiendo documento a pacientes: ', error);
-                observer.error(error);
-            });
-    });
+  return new Observable<string>((observer) => {
+      this.checkAuthentication();
+      const user = this.auth.currentUser;
+      const psicologoUID = user!.uid;
+      addDoc(collection(this.firestore, `users/${psicologoUID}/patients`), {})
+          .then((docRef) => {
+              console.log('Documento paciente creado con ID: ', docRef.id);
+              const patientId = docRef.id;
+
+              // Llamar a savePersonalData para guardar los datos personales del paciente
+              this.savePersonalData(patientData, patientId)
+                  .subscribe(
+                      () => {
+                          observer.next(patientId);
+                          observer.complete();
+                      },
+                      (error) => {
+                          console.error('Error guardando datos personales: ', error);
+                          observer.error(error);
+                      }
+                  );
+          })
+          .catch((error) => {
+              console.error('Error añadiendo documento a pacientes: ', error);
+              observer.error(error);
+          });
+  });
 }
+
 
   
 
@@ -103,10 +108,10 @@ savePersonalData(data: any, patientId: string): Observable<void> {
     this.checkAuthentication();
     const user = this.auth.currentUser;
     const psicologoUID = user!.uid;
-    // Referencia a la sub-colección 'datos personales' del paciente específico
-    const datosPersonalesCollectionRef = collection(this.firestore, `users/${psicologoUID}/patients/${patientId}/datosPersonales/`);
+    // Referencia a un documento específico en la sub-colección 'datos personales' del paciente específico
+    const datosPersonalesDocRef = doc(this.firestore, `users/${psicologoUID}/patients/${patientId}/datosPersonales/data`);
 
-    addDoc(datosPersonalesCollectionRef, data)  
+    setDoc(datosPersonalesDocRef, data)  
       .then(() => {
         observer.next();
         observer.complete();
@@ -116,6 +121,7 @@ savePersonalData(data: any, patientId: string): Observable<void> {
       });
   });
 }
+
 
 // Método para guardar anamnesis
 saveAnamnesis(data: any, patientId: string): Observable<void> {
