@@ -1,30 +1,34 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { Component, OnInit, HostListener, Injectable, inject } from '@angular/core';
+import { Auth, onAuthStateChanged, signOut } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
 export class NavbarComponent implements OnInit {
+  private auth: Auth = inject(Auth);
   isSticky: boolean = false;
   isLoggedIn = false;
 
-  private auth: any;
 
   constructor(private router: Router) {}
-
+  
   ngOnInit(): void {
-    this.auth = getAuth();
     onAuthStateChanged(this.auth, user => {
-      this.isLoggedIn = !!user;
+     this.isLoggedIn = !!user;
     });
   }
 
   logout(): void {
     signOut(this.auth).then(() => {
-      this.router.navigate(['/login']);
+     this.router.navigate(['/login']);
     });
   }
 

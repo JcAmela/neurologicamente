@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { Firestore, collection, addDoc, query, getDocs, doc, getDoc, limit, orderBy,updateDoc } from '@angular/fire/firestore';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, Auth } from "@angular/fire/auth";
 import Patient from 'interfaces/interfaces';
 import { setDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PatientsService {
-  private auth = getAuth();
 
-  constructor(private firestore: Firestore) {}
+export class PatientsService {
+  private auth: Auth = inject(Auth);
+  private firestore: Firestore = inject(Firestore)
+
+  //constructor(private firestore: Firestore) {}
 
   // Método para verificar la autenticación
   private checkAuthentication(): void {
@@ -141,15 +143,5 @@ saveAnamnesis(data: any, patientId: string): Observable<void> {
       });
   });
 }
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable,inject } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
 import { 
-  getAuth, 
   GoogleAuthProvider, 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   signInWithPopup 
-} from 'firebase/auth';
+} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   
   // Asumiendo que ya has inicializado firebaseApp en algún lugar de tu app
-  private auth = getAuth();
+  private auth: Auth = inject(Auth);
 
   constructor() {}
 

@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
-import { getAuth } from "firebase/auth";
+import { Auth } from '@angular/fire/auth';
 import Patient from 'interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DBaseService {
-  private auth = getAuth();
+  private auth: Auth = inject(Auth);
 
   constructor(private firestore: Firestore) {}
 

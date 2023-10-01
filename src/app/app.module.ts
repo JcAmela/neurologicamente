@@ -16,7 +16,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HomeModule } from './home/home.module';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -35,11 +35,10 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     FormsModule,
     HomeModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
   ],
   providers: [
-    { provide: 'firebase', useFactory: () => initializeApp(environment.firebase) },
-    { provide: 'firestore', useFactory: getFirestore, deps: ['firebase'] }
   ],
   bootstrap: [AppComponent]
 })
