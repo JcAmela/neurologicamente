@@ -17,7 +17,6 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.patientsService.getPatientsOfCurrentUser().subscribe(
       data => {
-        console.log(data);  // agregar esta línea
         this.allPatients = data;
         this.patients = data;
       },

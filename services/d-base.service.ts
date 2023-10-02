@@ -13,12 +13,12 @@ export class DBaseService {
 
   async addUid(patients: Patient): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
-      const user = this.auth.currentUser; // En lugar de escuchar cambios, solo obtén el usuario actual
+      const user = this.auth.currentUser; 
       
       if (user) {
         const patientsRef = collection(this.firestore, 'patients');
         
-        // Usamos try/catch para manejar errores
+       
         try {
           await addDoc(patientsRef, { id: user.uid }); // Añadimos solo el uid del usuario a Firestore
           resolve();
