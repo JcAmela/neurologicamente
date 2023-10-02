@@ -15,10 +15,14 @@ body {
 /* Sección hero */
 .hero-section {
   height: 80vh;
-  background: linear-gradient(45deg, #6DD5ED, #2193B0);
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./../../assets/welcome.avif');
+  background-size: cover;
+  background-position: center;
   color: white;
-  padding: 50px 0;
+  padding: 3em 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
+
 
 .text-container {
   padding: 20px;
@@ -39,6 +43,11 @@ body {
   max-width: 450px;
   display: block;
   margin: auto;
+  transition: transform 0.3s;
+}
+
+.hero-img:hover {
+  transform: scale(1.05);
 }
 
 .btn-accent {
@@ -48,16 +57,16 @@ body {
   border-radius: 30px;
   color: white;
   font-weight: bold;
-  transition: background 0.2s;
+  transition: background 0.2s, filter 0.2s;
 }
 
 .btn-accent:hover {
-  background: darken(var(--accent-color), 10%);
+  filter: brightness(90%);
 }
 
 /* Sección de características */
 .section-title {
-  margin-bottom: 40px;
+  margin: 50px 0 40px;
   font-weight: bold;
 }
 
@@ -80,4 +89,22 @@ body {
 .feature-box i {
   color: var(--primary-color);
   margin-bottom: 20px;
+  transition: color 0.3s;
+}
+
+.feature-box:hover i {
+  color: var(--accent-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-section {
+      padding: 2em 0;
+  }
+  .text-container, .hero-img {
+      padding: 1em;
+  }
+  .feature-box {
+      margin-bottom: 2em;
+  }
 }
