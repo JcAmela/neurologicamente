@@ -52,6 +52,7 @@ export default interface Patient {
   anamnesis?: Anamnesis;
   informe?: string;
   fechaActual?: string; 
+  registeredDate?: string; 
 }
 
 export interface Anamnesis {

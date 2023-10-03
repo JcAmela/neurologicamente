@@ -56,26 +56,48 @@ export class PatientsService {
 
   getPatientsOfCurrentUser(): Observable<Patient[]> {
     return this.checkAuthentication().pipe(
-      switchMap(() => {
-        const user = this.auth.currentUser!;
-        console.log('Usuario actual:', user);
-        const collRef = collection(this.firestore, `users/${user.uid}/patients/`);
-        const q = query(collRef, orderBy('registeredDate', 'desc'), limit(10));
-        return from(getDocs(q)).pipe(
-          map(querySnapshot => {
-            console.log('Snapshot de la consulta:', querySnapshot);
-            const patients = querySnapshot.docs.map(doc => {
-              console.log('Documento:', doc.data());
+        // Verifica si el usuario está autenticado
+        switchMap(() => {
+            const user = this.auth.currentUser;
+            if (!user) {
+                console.error('Error: No hay un usuario autenticado.');
+                throw new Error('No hay un usuario autenticado.');
+            }
+
+            console.log('Usuario autenticado:', user.uid);
+
+            // Configura la consulta a Firestore
+            const collRef = collection(this.firestore, `users/${user.uid}/patients/`);
+            const q = query(collRef, orderBy('registeredDate', 'desc'), limit(10));
+            return getDocs(q);
+        }),
+        // Mapea el snapshot de Firestore a un array de pacientes
+        map(querySnapshot => {
+          console.log('Número total de documentos:', querySnapshot.size);
+          if (querySnapshot.empty) {
+              console.log('No hay documentos en el snapshot.');
+          }
+      
+          return querySnapshot.docs.map(doc => {
+              console.log('Documento obtenido:', doc.id, doc.data());
               const data = doc.data();
+              if (!data) {
+                  console.warn(`Documento ${doc.id} no tiene datos.`);
+                  return { id: doc.id } as Patient;
+              }
               return { id: doc.id, ...data } as Patient;
-            });
-            console.log('Pacientes:', patients);
-            return patients;
-          })
-        );
-      })
+          });
+      }),
+      
+        // Captura y maneja errores
+        catchError(error => {
+            console.error('Error obteniendo pacientes:', error);
+            return throwError(new Error('Error obteniendo los pacientes del usuario actual.'));
+        })
     );
-  }
+}
+
+
 
   
 
@@ -104,11 +126,19 @@ export class PatientsService {
             if (data === null || typeof data !== 'object') {
                 throw new Error('Datos inválidos: data debe ser un objeto no-nulo.');
             }
+            
             const user = this.auth.currentUser;
             const psicologoUID = user!.uid;
             const datosPersonalesDocRef = doc(this.firestore, `users/${psicologoUID}/patients/${patientId}/datosPersonales/${patientId}`);
-            data.registeredDate = this.dataService.getToday();
-            return from(setDoc(datosPersonalesDocRef, data)).pipe(
+            const patientDocRef = doc(this.firestore, `users/${psicologoUID}/patients/${patientId}`);
+            
+            const registeredDate = this.dataService.getToday();
+            data.registeredDate = registeredDate;
+            
+            const setPatientDate = setDoc(patientDocRef, { registeredDate }, { merge: true });
+            const setPersonalData = setDoc(datosPersonalesDocRef, data);
+            
+            return from(Promise.all([setPatientDate, setPersonalData])).pipe(
                 map(() => { })  
             );
         }),
@@ -118,6 +148,7 @@ export class PatientsService {
         })
     );
 }
+
 
 
 

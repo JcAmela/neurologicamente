@@ -11,11 +11,12 @@
         <div *ngFor="let patient of patients" class="col-md-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{ patient.datosPersonales?.nombre }} {{ patient.datosPersonales?.apellidos
-                        }}</h5>
+                    <h5 class="card-title">{{ patient.datosPersonales?.nombre }} {{ patient.datosPersonales?.apellidos }}</h5>
+                    <!-- <p class="card-text">Fecha de Registro: {{ patient.registeredDate }}</p> -->
                     <p class="card-text">Edad: {{ getPatientAge(patient.datosPersonales?.fechaNacimiento) }} años</p>
                     <p class="card-text">Sexo: {{ patient.datosPersonales?.sexoBiologico }}</p>
                     <p class="card-text">Teléfono: {{ patient.datosPersonales?.telefono }}</p>
+                    <p class="card-text">Dirección: {{ patient.datosPersonales?.direccion }}</p>
                 </div>
             </div>
         </div>
