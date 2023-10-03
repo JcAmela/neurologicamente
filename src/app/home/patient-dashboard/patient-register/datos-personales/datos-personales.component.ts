@@ -25,7 +25,7 @@ export class DatosPersonalesComponent implements OnInit, ControlValueAccessor {
   });
 
   constructor(private fb: FormBuilder) {}
-
+  isSending = false; 
   ngOnInit() {}
 
 

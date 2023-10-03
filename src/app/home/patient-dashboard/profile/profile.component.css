@@ -2,7 +2,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     color: #333;
-    background-color: #f4f4f4;
+    background-color: #f8f8f8;
 }
 
 .container-fluid {
@@ -15,11 +15,12 @@ body {
 h2 {
     color: #2c3e50;
     font-weight: 700;
+    margin-bottom: 30px;
 }
 
 /* Barra de búsqueda */
 app-patient-search {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 /* Tarjetas de Pacientes */
@@ -32,14 +33,9 @@ app-patient-search {
 }
 
 .card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease-in-out;
-}
-
-.card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #e0e0e0; /* Bordes sutiles para las tarjetas */
+    border-radius: 5px; /* Bordos redondeados pero no demasiado */
+    background-color: #fff; /* Fondo blanco para la tarjeta */
 }
 
 .card-body {
@@ -47,19 +43,23 @@ app-patient-search {
 }
 
 .card-title {
-    margin-bottom: 10px;
-    font-size: 1.25rem;
-    color: #2c3e50;
+    border-bottom: 1px solid #e0e0e0; /* Una línea sutil para separar el título */
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    color: #2980b9; /* Un toque de azul para el título */
+    font-weight: 500; /* Un peso medio para el título */
 }
 
 .card-text {
     margin-bottom: 10px;
     color: #7f8c8d;
+    font-size: 1rem;
 }
 
 /* Paginación */
 nav {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .pagination {

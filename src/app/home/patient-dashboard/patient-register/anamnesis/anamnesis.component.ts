@@ -58,4 +58,20 @@ export class AnamnesisComponent implements OnInit, ControlValueAccessor {
     }
   }
 
+  isSectionOpen: { [key: string]: boolean } = {
+    'generalInfo': false,
+    'currentStatus': false
+  };
+
+  toggleSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        element.classList.toggle('show');
+        this.isSectionOpen[sectionId] = !this.isSectionOpen[sectionId];
+    }
+  }
+  resetForm(): void {
+    this.anamnesisForm.reset();  // Esto restablecerá todos los campos del formulario
+  }
+  
 }

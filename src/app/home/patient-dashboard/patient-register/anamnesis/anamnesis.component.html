@@ -1,56 +1,81 @@
+<form [formGroup]="anamnesisForm" class="anamnesis-form">
+  <h2 class="section-title">Anamnesis</h2>
 
-  <form [formGroup]="anamnesisForm">
-    <h2 class="mb-5">Anamnesis</h2>
-    <div class="form-group">
-      <label for="motivoConsulta">Motivo de consulta</label>
-      <input formControlName="motivoConsulta" id="motivoConsulta" class="form-control" type="text" />
+  <!-- Sección de Información General -->
+  <section class="section-content">
+    <div class="section-header" (click)="toggleSection('generalInfo')">
+      <h3>Información General</h3>
+      <i class="fa" [ngClass]="isSectionOpen['generalInfo'] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
     </div>
-    <div class="form-group">
-      <label for="historiaClinicaBiopsicosocial">Historia Clínica Biopsicosocial</label>
-      <textarea formControlName="historiaClinicaBiopsicosocial" id="historiaClinicaBiopsicosocial" class="form-control"></textarea>
+    <div id="generalInfo" class="content-wrapper">
+      <div class="form-group">
+        <label for="motivoConsulta">Motivo de consulta</label>
+        <input formControlName="motivoConsulta" id="motivoConsulta" class="form-control" type="text" placeholder="Ingrese motivo de consulta" />
+      </div>
+      <div class="form-group">
+        <label for="historiaClinicaBiopsicosocial">Historia Clínica Biopsicosocial</label>
+        <textarea formControlName="historiaClinicaBiopsicosocial" id="historiaClinicaBiopsicosocial" class="form-control" placeholder="Ingrese detalles de la historia clínica"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="antecedentesMedicos">Antecedentes Médicos</label>
+        <textarea formControlName="antecedentesMedicos" id="antecedentesMedicos" class="form-control" placeholder="Ingrese antecedentes médicos"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="antecedentesFamiliares">Antecedentes Familiares</label>
+        <textarea formControlName="antecedentesFamiliares" id="antecedentesFamiliares" class="form-control" placeholder="Ingrese antecedentes familiares"></textarea>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="antecedentesMedicos">Antecedentes Médicos</label>
-      <textarea formControlName="antecedentesMedicos" id="antecedentesMedicos" class="form-control"></textarea>
-    </div>
-    <div class="form-group">
-      <label for="antecedentesFamiliares">Antecedentes Familiares</label>
-      <textarea formControlName="antecedentesFamiliares" id="antecedentesFamiliares" class="form-control"></textarea>
-    </div>
+  </section>
 
-    <h3>Estado Actual</h3>
-    <div formGroupName="estadoActual">
+  <!-- Sección de Estado Actual -->
+  <section class="section-content">
+    <div class="section-header" (click)="toggleSection('currentStatus')">
+      <h3>Estado Actual</h3>
+      <i class="fa" [ngClass]="isSectionOpen['currentStatus'] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+    </div>
+    <div id="currentStatus" class="content-wrapper" formGroupName="estadoActual">
       <div class="form-group">
         <label for="esferaSocial">Esfera Social</label>
-        <textarea formControlName="esferaSocial" id="esferaSocial" class="form-control"></textarea>
+        <textarea formControlName="esferaSocial" id="esferaSocial" class="form-control" placeholder="Describa el estado de la esfera social"></textarea>
       </div>
       <div class="form-group">
         <label for="esferaCognitiva">Esfera Cognitiva</label>
-        <textarea formControlName="esferaCognitiva" id="esferaCognitiva" class="form-control"></textarea>
+        <textarea formControlName="esferaCognitiva" id="esferaCognitiva" class="form-control" placeholder="Describa el estado de la esfera cognitiva"></textarea>
       </div>
       <div class="form-group">
         <label for="esferaPsicologica">Esfera Psicológica</label>
-        <textarea formControlName="esferaPsicologica" id="esferaPsicologica" class="form-control"></textarea>
+        <textarea formControlName="esferaPsicologica" id="esferaPsicologica" class="form-control" placeholder="Describa el estado de la esfera psicológica"></textarea>
       </div>
       <div class="form-group">
         <label for="otraInformacion">Otra Información</label>
-        <textarea formControlName="otraInformacion" id="otraInformacion" class="form-control"></textarea>
+        <textarea formControlName="otraInformacion" id="otraInformacion" class="form-control" placeholder="Ingrese cualquier otra información relevante"></textarea>
       </div>
 
-      <h4>Nuevo Diagnóstico</h4>
-      <div formGroupName="nuevoDiagnostico">
-        <div class="form-group">
-          <label for="diagnostico">Diagnóstico</label>
-          <input formControlName="diagnostico" id="diagnostico" class="form-control" type="text" />
+      <!-- Sección de Nuevo Diagnóstico dentro de Estado Actual -->
+      <section class="section-content">
+        <div class="section-header" (click)="toggleSection('newDiagnosis')">
+          <h3>Nuevo Diagnóstico</h3>
+          <i class="fa" [ngClass]="isSectionOpen['newDiagnosis'] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
         </div>
-        <div class="form-group">
-          <label for="fecha">Fecha</label>
-          <input formControlName="fecha" id="fecha" class="form-control" type="date" />
+        <div id="newDiagnosis" class="content-wrapper" formGroupName="nuevoDiagnostico">
+          <div class="form-group">
+            <label for="diagnostico">Diagnóstico</label>
+            <input formControlName="diagnostico" id="diagnostico" class="form-control" type="text" placeholder="Ingrese diagnóstico" />
+          </div>
+          <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input formControlName="fecha" id="fecha" class="form-control" type="date" />
+          </div>
+          <div class="form-group">
+            <label for="nombreClinico">Nombre Clínico</label>
+            <input formControlName="nombreClinico" id="nombreClinico" class="form-control" type="text" placeholder="Ingrese nombre clínico" />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="nombreClinico">Nombre Clínico</label>
-          <input formControlName="nombreClinico" id="nombreClinico" class="form-control" type="text" />
-        </div>
-      </div>
+      </section>
     </div>
-  </form>
+    <!-- Botones para guardar y restablecer -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-outline-secondary reset-button" (click)="resetForm()">Restablecer</button>
+    </div>
+  </section>
+</form>

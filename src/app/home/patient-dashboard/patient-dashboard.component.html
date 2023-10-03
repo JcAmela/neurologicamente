@@ -1,26 +1,45 @@
-<div class="container-fluid mt-4">
-    <div class="row">
+<div class="container-fluid mt-5">
+  <div class="row">
 
       <!-- Sidebar / Navigation -->
-      <div class="col-md-3 sidebar bg-light">
-        <div class="list-group">
-          <h4>Pacientes</h4>
-          <a href="javascript:void(0)" class="list-group-item list-group-item-action active d-flex justify-content-between align-items-center" (click)="showComponent('profile')">
-            Listado <i class="fas fa-user"></i>
-          </a>
-          <a href="javascript:void(0)" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="showComponent('register')">
-            Registro <i class="fas fa-file-medical"></i>
-          </a>
-        </div>
-      </div>
+      <aside class="col-md-3">
+          <nav class="sidebar">
+              <ul class="nav flex-column" aria-label="Menú lateral de navegación">
+                  <li class="nav-item">
+                    <button class="nav-link btn btn-link" 
+                    [class.active]="activeComponent === 'profile'"
+                    [attr.aria-pressed]="activeComponent === 'profile'"
+                    (click)="showComponent('profile')">
+                <span class="icon-wrapper">
+                    <i class="fas fa-user icon-spacing" aria-hidden="true"></i>
+                </span>
+                Mis Pacientes
+            </button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="nav-link btn btn-link" 
+                    [class.active]="activeComponent === 'register'"
+                    [attr.aria-pressed]="activeComponent === 'register'"
+                    (click)="showComponent('register')">
+                <span class="icon-wrapper">
+                    <i class="fas fa-file-medical icon-spacing" aria-hidden="true"></i>
+                </span>
+                Registro nuevo
+            </button>
+                  </li>
+              </ul>
+          </nav>
+      </aside>
 
       <!-- Main content area -->
-      <div class="col-md-9 main-content border-left pl-4">
-        <div *ngIf="activeComponent === 'profile'">
-          <app-profile></app-profile>
-        </div>
-        <div *ngIf="activeComponent === 'register'">
-          <app-patient-register></app-patient-register>
-        </div>
-    </div>
+      <main class="col-md-9 main-content">
+          <section *ngIf="activeComponent === 'profile'">
+              <app-profile></app-profile>
+          </section>
+          <section *ngIf="activeComponent === 'register'">
+              <app-patient-register></app-patient-register>
+          </section>
+      </main>
+
+  </div>
 </div>

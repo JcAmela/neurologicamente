@@ -1,41 +1,61 @@
-<div class="container-fluid">
-  <div class="card mt-5 shadow">
-    <div class="card-header bg-primary text-white">
-      Datos Personales
-    </div>
-    <div class="card-body" [formGroup]="datosPersonalesForm">
-      <div class="form-row">
+<div class="container-fluid form-container">
+  <section class="card form-card shadow">
+    <header class="card-header form-header bg-primary text-white">
+      <h2>Datos Personales</h2>
+    </header>
+    <form [formGroup]="datosPersonalesForm" class="card-body">
+      
+      <!-- Nombre y Apellidos -->
+      <div class="form-group-row">
         <div class="form-group col-md-6">
-          <input class="form-control" formControlName="nombre" placeholder="Nombre">
+          <label class="form-label" for="inputNombre">
+            <i class="fas fa-user"></i> Nombre
+          </label>
+          <input class="form-input" id="inputNombre" formControlName="nombre" placeholder="Nombre" aria-required="true">
         </div>
         <div class="form-group col-md-6">
-          <input class="form-control" formControlName="apellidos" placeholder="Apellidos">
+          <label class="form-label" for="inputApellidos">
+            <i class="fas fa-user-tag"></i> Apellidos
+          </label>
+          <input class="form-input" id="inputApellidos" formControlName="apellidos" placeholder="Apellidos" aria-required="true">
         </div>
       </div>
-
+      
+      <!-- Dirección -->
       <div class="form-group">
-        <input class="form-control" formControlName="direccion" placeholder="Dirección">
+        <label class="form-label" for="inputDireccion">
+          <i class="fas fa-map-marker-alt"></i> Dirección
+        </label>
+        <input class="form-input" id="inputDireccion" formControlName="direccion" placeholder="Dirección" aria-required="true">
       </div>
-
+      
+      <!-- Teléfono -->
       <div class="form-group">
-        <input class="form-control" formControlName="telefono" placeholder="Teléfono">
+        <label class="form-label" for="inputTelefono">
+          <i class="fas fa-phone"></i> Teléfono
+        </label>
+        <input class="form-input" id="inputTelefono" formControlName="telefono" placeholder="Teléfono" aria-required="true" pattern="[0-9]{8,15}" title="Ingresa un número de teléfono válido">
       </div>
-
-      <div class="form-row">
+      
+      <!-- Sexo Biológico y Fecha de Nacimiento -->
+      <div class="form-group-row">
         <div class="form-group col-md-6">
-          <label for="sexoBiologico">Sexo Biológico:</label>
-          <select class="form-control" id="sexoBiologico" formControlName="sexoBiologico" required>
-            <option value="" hidden>Sexo Biológico</option>
-            <option value="Hombre" selected>Hombre</option>
+          <label class="form-label" for="sexoBiologico">
+            <i class="fas fa-venus-mars"></i> Sexo Biológico
+          </label>
+          <select class="form-control form-input" id="sexoBiologico" formControlName="sexoBiologico" aria-required="true">
+            <option value="" hidden>Seleccione una opción</option>
+            <option value="Hombre">Hombre</option>
             <option value="Mujer">Mujer</option>
           </select>
         </div>
-
         <div class="form-group col-md-6">
-          <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-          <input class="form-control" type="date" id="fechaNacimiento" formControlName="fechaNacimiento">
+          <label class="form-label" for="fechaNacimiento">
+            <i class="fas fa-calendar-alt"></i> Fecha de Nacimiento
+          </label>
+          <input class="form-input" type="date" id="fechaNacimiento" formControlName="fechaNacimiento" aria-required="true">
         </div>
       </div>
-    </div>
-  </div>
+    </form>
+  </section>
 </div>

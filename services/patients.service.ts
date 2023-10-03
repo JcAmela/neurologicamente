@@ -15,7 +15,7 @@ export class PatientsService {
   constructor(
     private auth: Auth,
     private firestore: Firestore,
-    private dataService: DataService  // Inyecta DataService
+    private dataService: DataService  
   ) { }
 
   private checkAuthentication(): Observable<void> {
@@ -56,7 +56,6 @@ export class PatientsService {
 
   getPatientsOfCurrentUser(): Observable<Patient[]> {
     return this.checkAuthentication().pipe(
-        // Verifica si el usuario está autenticado
         switchMap(() => {
             const user = this.auth.currentUser;
             if (!user) {
@@ -66,12 +65,10 @@ export class PatientsService {
 
             console.log('Usuario autenticado:', user.uid);
 
-            // Configura la consulta a Firestore
             const collRef = collection(this.firestore, `users/${user.uid}/patients/`);
             const q = query(collRef, orderBy('registeredDate', 'desc'), limit(10));
             return getDocs(q);
         }),
-        // Mapea el snapshot de Firestore a un array de pacientes
         map(querySnapshot => {
           console.log('Número total de documentos:', querySnapshot.size);
           if (querySnapshot.empty) {
@@ -88,8 +85,6 @@ export class PatientsService {
               return { id: doc.id, ...data } as Patient;
           });
       }),
-      
-        // Captura y maneja errores
         catchError(error => {
             console.error('Error obteniendo pacientes:', error);
             return throwError(new Error('Error obteniendo los pacientes del usuario actual.'));
@@ -97,9 +92,6 @@ export class PatientsService {
     );
 }
 
-
-
-  
 
   private getPatientById(patientId: string): Observable<Patient> {
     return this.checkAuthentication().pipe(
@@ -123,22 +115,18 @@ export class PatientsService {
   savePersonalData(data: any, patientId: string): Observable<void> {
     return this.checkAuthentication().pipe(
         switchMap(() => {
-            if (data === null || typeof data !== 'object') {
-                throw new Error('Datos inválidos: data debe ser un objeto no-nulo.');
-            }
-            
             const user = this.auth.currentUser;
             const psicologoUID = user!.uid;
-            const datosPersonalesDocRef = doc(this.firestore, `users/${psicologoUID}/patients/${patientId}/datosPersonales/${patientId}`);
             const patientDocRef = doc(this.firestore, `users/${psicologoUID}/patients/${patientId}`);
             
             const registeredDate = this.dataService.getToday();
-            data.registeredDate = registeredDate;
             
-            const setPatientDate = setDoc(patientDocRef, { registeredDate }, { merge: true });
-            const setPersonalData = setDoc(datosPersonalesDocRef, data);
+            const updatedData = {
+                datosPersonales: data,
+                registeredDate: registeredDate
+            };
             
-            return from(Promise.all([setPatientDate, setPersonalData])).pipe(
+            return from(setDoc(patientDocRef, updatedData, { merge: true })).pipe(
                 map(() => { })  
             );
         }),
@@ -149,28 +137,24 @@ export class PatientsService {
     );
 }
 
-
-
-
-
 saveAnamnesis(data: any, patientId: string): Observable<void> {
     return this.checkAuthentication().pipe(
-      switchMap(() => {
-        if (data === null || typeof data !== 'object') {
-          throw new Error('Datos inválidos: data debe ser un objeto no-nulo.');
-        }
-        const user = this.auth.currentUser;
-        const psicologoUID = user!.uid;
-        const anamnesisCollectionRef = collection(this.firestore, `users/${psicologoUID}/patients/${patientId}/anamnesis`);
-        return from(addDoc(anamnesisCollectionRef, data)).pipe(
-          map(() => { })  
-        );
-      }),
-      catchError(error => {
-        console.error('Error guardando anamnesis:', error);
-        return throwError(error);
-      })
+        switchMap(() => {
+            const user = this.auth.currentUser;
+            const psicologoUID = user!.uid;
+            const patientDocRef = doc(this.firestore, `users/${psicologoUID}/patients/${patientId}`);
+            
+            return from(setDoc(patientDocRef, { anamnesis: data }, { merge: true })).pipe(
+                map(() => { })  
+            );
+        }),
+        catchError(error => {
+            console.error('Error guardando anamnesis:', error);
+            return throwError(error);
+        })
     );
 }
+
+
 
 }
